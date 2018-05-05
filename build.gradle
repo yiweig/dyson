@@ -2,36 +2,59 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-plugins {
-    id 'com.github.johnrengelman.shadow' version '1.2.4'
+buildscript {
+    repositories {
+        maven { url  "http://palantir.bintray.com/releases" }
+    }
+
+    dependencies {
+        classpath 'com.palantir.baseline:gradle-baseline-java:0.20.0'
+    }
 }
 
-version '1.0-SNAPSHOT'
-group 'com.automationrhapsody.reststub'
-description 'Sample Dropwizard REST Stub'
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id "org.inferred.processors" version "1.2.15"
+}
 
-apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+// Apply for baselineUpdateConfig task
+apply plugin: 'com.palantir.baseline-config'
+apply plugin: 'java'
+
+// Apply plugins selectively depending on required functionality.
+apply plugin: 'com.palantir.baseline-checkstyle'
+apply plugin: 'com.palantir.baseline-eclipse'
+apply plugin: 'com.palantir.baseline-idea'
+apply plugin: 'com.palantir.baseline-error-prone'
+apply plugin: 'com.palantir.baseline-class-uniqueness'
 
 repositories {
     mavenCentral()
+    maven { url  "http://palantir.bintray.com/releases" }
+    maven { url "https://plugins.gradle.org/m2/" }
 }
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
-    compile 'io.dropwizard:dropwizard-core:0.8.0'
+    compile('io.dropwizard:dropwizard-core:1.3.1') {
+        exclude group: 'javax.inject', module: 'javax.inject'
+    }
 
-    testCompile 'junit:junit:4.12'
+    // Adds a dependency on the Baseline configuration files. Typically use 
+    // the same version as the plugin itself.
+    baseline "com.palantir.baseline:gradle-baseline-java-config:0.20.0@zip"
+
+    testCompile 'junit:junit:5.2.0'
 }
-
-mainClassName = 'com.automationrhapsody.reststub.RestStubApp'
 
 run {
     args = ['server', 'config.yml']
 }
 
+mainClassName = 'com.automationrhapsody.reststub.RestStubApp'
 shadowJar {
     mergeServiceFiles()
     exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
@@ -39,11 +62,14 @@ shadowJar {
         attributes 'Implementation-Title': rootProject.name
         attributes 'Implementation-Version': rootProject.version
         attributes 'Implementation-Vendor-Id': rootProject.group
-        attributes 'Build-Time': ZonedDateTime.now(ZoneId.of("UTC"))
-                .format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
+        attributes 'Build-Time': ZonedDateTime.now(ZoneId.of("UTC")).format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
         attributes 'Built-By': InetAddress.localHost.hostName
         attributes 'Created-By': 'Gradle ' + gradle.gradleVersion
         attributes 'Main-Class': mainClassName
     }
     archiveName 'sample-dropwizard-rest-stub.jar'
 }
+
+version '1.0-SNAPSHOT'
+group 'com.automationrhapsody.reststub'
+description 'Sample Dropwizard REST Stub'
