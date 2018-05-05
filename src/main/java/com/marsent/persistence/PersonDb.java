@@ -1,13 +1,28 @@
-package com.automationrhapsody.reststub.persistence;
+/*
+ * (c) Copyright 2018 Yiwei Gao. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import com.automationrhapsody.reststub.data.Person;
+package com.marsent.persistence;
 
+import com.marsent.data.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PersonDB {
+public final class PersonDb {
     private static final Map<Integer, Person> PERSONS = new TreeMap<>();
 
     static {
@@ -15,6 +30,10 @@ public class PersonDB {
         PERSONS.put(2, new Person(2, "FN2", "LN2", "email2@email.na"));
         PERSONS.put(3, new Person(3, "FN3", "LN3", "email3@email.na"));
         PERSONS.put(4, new Person(4, "FN4", "LN4", "email4@email.na"));
+    }
+
+    private PersonDb() {
+        // Intentionally blank.
     }
 
     public static Person getById(int id) {

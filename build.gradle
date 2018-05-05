@@ -4,8 +4,10 @@ import java.time.format.DateTimeFormatter
 
 buildscript {
     repositories {
-        maven { url  "http://palantir.bintray.com/releases" }
         jcenter()
+        maven {
+            url "http://palantir.bintray.com/releases"
+        }
     }
 
     dependencies {
@@ -25,7 +27,7 @@ description 'Sample Dropwizard REST Stub'
 apply plugin: 'application'
 // mainClassName MUST go after 'application' plugin has been applied, but
 // also MUST go before 'shadow' plugin is applied. See https://github.com/johnrengelman/shadow/issues/336
-mainClassName = 'com.automationrhapsody.reststub.RestStubApp'
+mainClassName = 'Dyson'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 // Apply for baselineUpdateConfig task
@@ -41,8 +43,12 @@ apply plugin: 'com.palantir.baseline-class-uniqueness'
 
 repositories {
     mavenCentral()
-    maven { url  "http://palantir.bintray.com/releases" }
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    maven {
+        url "http://palantir.bintray.com/releases"
+    }
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -56,7 +62,21 @@ dependencies {
     // the same version as the plugin itself.
     baseline "com.palantir.baseline:gradle-baseline-java-config:0.20.0@zip"
 
-    testCompile 'junit:junit:5.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+}
+
+test {
+    // Enable JUnit 5 (Gradle 4.6+).
+    useJUnitPlatform()
+
+    // Always run tests, even when nothing changed.
+    dependsOn 'cleanTest'
+
+    // Show test results.
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 run {
@@ -75,6 +95,6 @@ shadowJar {
         attributes 'Created-By': 'Gradle ' + gradle.gradleVersion
         attributes 'Main-Class': mainClassName
     }
-    archiveName 'sample-dropwizard-rest-stub.jar'
+    archiveName 'dyson.jar'
 }
 

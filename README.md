@@ -1,4 +1,4 @@
-# sample-dropwizard-rest-stub #
+# dyson #
 This project is intended to demonstrate how to create RESTful server stub with Dropwizard as well as other  All topics that this project is used for are:
 * <a href="http://automationrhapsody.com/build-a-rest-stub-server-with-dropwizard/">Build a RESTful stub server with Dropwizard</a>
 * <a href="http://automationrhapsody.com/build-dropwizard-project-gradle/" target="_blank">Build a Dropwizard project with Gradle</a>
@@ -12,7 +12,7 @@ This project is intended to demonstrate how to create RESTful server stub with D
 ## Run ##
 Run JAR with following command
 
-`java -jar build/sample-dropwizard-rest-stub.jar server config.yml`
+`java -jar build/dyson.jar server config.yml`
 
 You can run project directly from Gradle with following command
 
