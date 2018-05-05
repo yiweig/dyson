@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.marsent;
+package com.dyson;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

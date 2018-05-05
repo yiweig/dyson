@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.marsent.data;
+package com.dyson.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

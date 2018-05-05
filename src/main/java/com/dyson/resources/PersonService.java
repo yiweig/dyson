@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.marsent.resources;
+package com.dyson.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.marsent.data.Person;
-import com.marsent.persistence.PersonDb;
+import com.dyson.data.Person;
+import com.dyson.persistence.PersonDb;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

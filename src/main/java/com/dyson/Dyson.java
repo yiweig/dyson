@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package com.marsent;
+package com.dyson;
 
-import com.codahale.metrics.health.HealthCheck;
-import com.marsent.persistence.PersonDb;
+import com.dyson.resources.PersonService;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Environment;
 
-public final class DysonCheck extends HealthCheck {
-    private final String version;
+public final class Dyson extends Application<DysonConfig> {
 
-    public DysonCheck(String version) {
-        this.version = version;
+    public static void main(String[] args) throws Exception {
+        new Dyson().run(args);
     }
 
     @Override
-    protected Result check() throws Exception {
-        if (PersonDb.getCount() == 0) {
-            return Result.unhealthy("No persons in DB! Version: " + this.version);
-        }
-        return Result.healthy("OK with version: " + this.version + ". Persons count: " + PersonDb.getCount());
+    public void run(DysonConfig config, Environment env) {
+        final PersonService personService = new PersonService();
+        env.jersey().register(personService);
+
+        final DysonCheck healthCheck = new DysonCheck(config.getVersion());
+        env.healthChecks().register("template", healthCheck);
+        env.jersey().register(healthCheck);
     }
 }

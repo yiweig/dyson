@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.marsent.persistence;
+package com.dyson.persistence;
 
-import com.marsent.data.Person;
+import com.dyson.data.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
